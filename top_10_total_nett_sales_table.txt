@@ -1,0 +1,12 @@
+CREATE TABLE kimia_farma.top_10_total_nett_sales AS
+SELECT 
+    branch_name,
+    provinsi,
+    SUM(nett_sales) AS total_nett_sales
+FROM 
+    kimia_farma.kf_analytics
+GROUP BY 
+    branch_name,provinsi
+ORDER BY 
+    total_nett_sales DESC
+LIMIT 10;
