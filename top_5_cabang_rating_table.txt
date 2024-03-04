@@ -1,0 +1,28 @@
+CREATE TABLE kimia_farma.top_5_cabang_rating_tertinggi AS
+WITH cabang_ratings AS (
+    SELECT 
+        kf.branch_name,
+        kf.kota,
+        AVG(ka.rating_cabang) AS avg_rating_cabang,
+        AVG(ka.rating_transaksi) AS avg_rating_transaksi
+    FROM 
+        kimia_farma.kf_analytics AS ka
+    JOIN
+        kimia_farma.kf_kantor_cabang AS kf
+    ON
+        ka.branch_id = kf.branch_id
+    GROUP BY 
+        kf.branch_name, kf.kota
+)
+SELECT 
+    branch_name,
+    kota,
+    avg_rating_cabang,
+    avg_rating_transaksi
+FROM 
+    cabang_ratings
+WHERE 
+    avg_rating_cabang > avg_rating_transaksi
+ORDER BY 
+    avg_rating_transaksi ASC
+LIMIT 5;
