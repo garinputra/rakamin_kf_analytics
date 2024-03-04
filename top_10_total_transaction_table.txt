@@ -1,0 +1,12 @@
+CREATE TABLE kimia_farma.top_10_total_transaksi AS
+SELECT 
+    branch_name,
+    provinsi,
+    COUNT(transaction_id) AS total_transaksi
+FROM 
+    kimia_farma.kf_analytics
+GROUP BY 
+    branch_name, provinsi
+ORDER BY 
+    total_transaksi DESC
+LIMIT 10;
